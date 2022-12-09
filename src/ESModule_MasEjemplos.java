@@ -1,7 +1,9 @@
 import juligame.epicswords2.API;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -44,18 +46,18 @@ public class ESModule_MasEjemplos {
                 //en esta caso son 2 for juntos.
                 //el primero es para las X
                 //el segundo es para las Z
-                //es decir que estariamos haciendo un cuadrado de 3x3 alrededor del target
+                //es decir que estariamos haciendo un cuadrado de 5x5 alrededor del target
 
-                for (int x = -1; x <= 1; x++) {
-                    for (int z = -1; z <= 1; z++) {
+                for (int x = -2; x <= 2; x++) {
+                    for (int z = -2; z <= 2; z++) {
                         //agarramos el bloque en las coordenadas
                         // y lo ponemos de hielo
 
                         //calculamos las coordenadas
-                        Block aModificar = target.getWorld().getHighestBlockAt(x, z);
+                        Block aModificar = target.getWorld().getHighestBlockAt((int) (target.getLocation().getX() + x), (int) (target.getLocation().getZ() + z));
 
                         //añadir el bloque a la lista de bloques modificados
-                        bloquesModificados.put(aModificar.getLocation(), aModificar.getType());
+                        if (!bloquesModificados.containsKey(aModificar.getLocation())) bloquesModificados.put(aModificar.getLocation(), aModificar.getType());
 
                         //ponemos el bloque de hielo
                         aModificar.setType(Material.ICE);
@@ -89,6 +91,10 @@ public class ESModule_MasEjemplos {
                     }
                 }.runTaskLater(API.pluginInstance, 20 + 3 * level);
                 // y aca arriba con .runTaskLater le decimos que lo ejecute despues de 20 ticks + 3 por nivel de combo
+
+
+                //ponemos particulas
+                ESModule_Weapons.DrawCircle(player, 1, Particle.SNOWBALL, 100);
 
             }
         });
