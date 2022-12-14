@@ -1,11 +1,12 @@
 import juligame.epicswords2.API;
-import org.bukkit.Location;
-import org.bukkit.entity.AreaEffectCloud;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
+import org.bukkit.*;
+import org.bukkit.entity.*;
+import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.time.Duration;
 
 public class ESModule_Armors {
     public static void main(){
@@ -34,6 +35,19 @@ public class ESModule_Armors {
 
 
                 });
+
+
+        API.addArmorAction("ResuDorado",
+                (portador, attacker, actionLevel, damage, finalDamage, event) -> {
+                    System.out.println("DEBUG: Etapa 1 cargada");
+                    ESModule_Weapons.DrawCircle(portador, 1, Particle.CLOUD, 200);
+                    ESModule_Weapons.DrawCircle(portador, 1.2f, Particle.HEART, 200);
+                    System.out.println("DEBUG: Etapa 2 cargada");
+                    portador.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 200 + 3 * actionLevel, 1 + 1 * actionLevel));
+                    portador.sendMessage(ChatColor.AQUA + "Tu combo en la armadura fue activado y ahora tienes un BUFF de absorption en ti.");
+                    attacker.sendMessage(ChatColor.YELLOW + "El combo de la armadura de" + ChatColor.RED  + portador + ChatColor.YELLOW + "Fue activado y ahora tiene un BUFF de absorption en el.");
+                    System.out.println("DEBUG: Etapa 3 cargada");
+                }); 
 
 
     }
