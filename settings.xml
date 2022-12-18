@@ -1,0 +1,12 @@
+<settings>
+    <servers>
+        <server>
+            <id>ftp-repository</id>
+            <username>juligame.60063a5c</username>
+            <password>Juliane2005</password>
+            <configuration>
+                <endpointChecking>false</endpointChecking>
+            </configuration>
+        </server>
+    </servers>
+</settings>

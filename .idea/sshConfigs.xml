@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="node1.exilonmc.net" id="979659b5-b382-4d64-b647-185b4b1f50b9" port="2022" nameFormat="DESCRIPTIVE" username="juligame.2c404413" useOpenSSHConfig="true" />
+    </configs>
+  </component>
+</project>

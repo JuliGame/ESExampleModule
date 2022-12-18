@@ -17,6 +17,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <distributionManagement>
+        <site>
+            <id>ftp.server.id</id>
+            <url>ftps://play.exilonmc.net:2022</url>
+        </site>
+    </distributionManagement>
+
     <build>
         <plugins>
             <plugin>
@@ -51,7 +58,16 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <extensions>
+            <!-- Enabling the use of FTP -->
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+            </extension>
+        </extensions>
     </build>
+
+
 
     <repositories>
         <repository>
@@ -75,5 +91,12 @@
             <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-ftp</artifactId>
+            <version>3.3.3</version>
+        </dependency>
     </dependencies>
+
+
 </project>

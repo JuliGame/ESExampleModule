@@ -1,9 +1,14 @@
+import dev.esophose.playerparticles.api.PlayerParticlesAPI;
+import dev.esophose.playerparticles.particles.ParticleEffect;
+import dev.esophose.playerparticles.particles.ParticlePair;
+import dev.esophose.playerparticles.particles.data.OrdinaryColor;
+import dev.esophose.playerparticles.styles.ParticleStyle;
 import juligame.epicswords2.API;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
-import org.bukkit.entity.EntityType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,7 +26,7 @@ public class ESModule_MasEjemplos {
         //es decir que si tengo Xcombo en 2 armaduras, una lvl 2 y otra 5
         //el level del combo sera 7 (se ejecuta 1 vez, pero con lvl 7)
 
-        API.addArmorAction("Glacial", (player, target, level, normalDamage, finalDamage, event) -> {
+        API.addArmorAction("Glacial", (player, target, level, normalDamage, finalDamage, event, amountOfPieces) -> {
             // bueno la idea de este efecto es relentizar al target
             // y si el combo es lvl 10 para arriba se pone el piso de hielo
             // y le da speed al player
@@ -48,17 +53,14 @@ public class ESModule_MasEjemplos {
                 //el segundo es para las Z
                 //es decir que estariamos haciendo un cuadrado de 5x5 alrededor del target
 
-                for (int x = -2; x <= 2; x++) {
-                    for (int z = -2; z <= 2; z++) {
+                for (int x = -2; x < 2; x++) {
+                    for (int z = -2; z < 2; z++) {
                         //agarramos el bloque en las coordenadas
                         // y lo ponemos de hielo
 
                         //calculamos las coordenadas
                         Block aModificar = target.getWorld().getHighestBlockAt((int) (target.getLocation().getX() + x), (int) (target.getLocation().getZ() + z));
-
-                        //añadir el bloque a la lista de bloques modificados
-                        if (!bloquesModificados.containsKey(aModificar.getLocation())) bloquesModificados.put(aModificar.getLocation(), aModificar.getType());
-
+                        bloquesModificados.put(aModificar.getLocation(), aModificar.getType());
                         //ponemos el bloque de hielo
                         aModificar.setType(Material.ICE);
                     }
@@ -73,6 +75,7 @@ public class ESModule_MasEjemplos {
                 //para eso vamos a usar el metodo .runTaskLater
                 //que ejecuta una tarea despues de cierto tiempo
 
+                System.out.println(bloquesModificados);
                 //primero creamos la tarea
                 new BukkitRunnable() {
                     @Override
@@ -81,21 +84,16 @@ public class ESModule_MasEjemplos {
                         //y lo que hace es revertir los cambios
 
                         //recorremos la lista de bloques modificados
-                        for (Location location : bloquesModificados.keySet()) {
-                            //agarramos el bloque en la coordenada
-                            Block aModificar = location.getBlock();
-
+                        for (Location aModificar : bloquesModificados.keySet()) {
                             //y lo ponemos de nuevo como estaba
-                            aModificar.setType(bloquesModificados.get(location));
+                            if (bloquesModificados.get(aModificar) == Material.ICE) continue;
+                            aModificar.getBlock().setType(bloquesModificados.get(aModificar));
                         }
                     }
-                }.runTaskLater(API.pluginInstance, 20 + 3 * level);
+                }.runTaskLater(API.pluginInstance, 20 + 3L * level);
                 // y aca arriba con .runTaskLater le decimos que lo ejecute despues de 20 ticks + 3 por nivel de combo
 
-
-                //ponemos particulas
-                ESModule_Weapons.DrawCircle(player, 1, Particle.SNOWBALL, 100);
-
+                UPECompatibility.createUPEParticle("RayosDeHielo", target, false, 1.5f, false, false, .5f);
             }
         });
     }

@@ -105,6 +105,8 @@ public class ESModule_Weapons {
                         }
                         if (item == null) return;
                         target.getWorld().dropItem(target.getLocation(), item);
+                        UPECompatibility.createUPEParticle("Cortada", player, false, 1, true, true, 1);
+                        UPECompatibility.createUPEParticle("Veneno", target, false, 30, true, false, 1, false, Particle.FALLING_LAVA);
                     }
                 });
 

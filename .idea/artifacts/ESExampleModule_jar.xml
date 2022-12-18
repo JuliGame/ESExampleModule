@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" build-on-make="true" name="ESExampleModule:jar">
-    <output-path>$PROJECT_DIR$/../servidor 1.19/plugins/EpicSwords2/modules</output-path>
+    <output-path>$PROJECT_DIR$/../Servers/1.19.2/plugins/EpicSwords2/modules/</output-path>
     <root id="archive" name="ESExampleModule.jar">
       <element id="module-output" name="ESExampleModule" />
     </root>

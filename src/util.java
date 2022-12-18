@@ -1,3 +1,4 @@
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
@@ -39,5 +40,12 @@ public class util {
         SkullMeta skull = (SkullMeta) item.getItemMeta();
         item.setItemMeta(skull);
         return item;
+    }
+
+    public static Location locationLerp(Location start, Location end, double percent) {
+        double x = start.getX() + (end.getX() - start.getX()) * percent;
+        double y = start.getY() + (end.getY() - start.getY()) * percent;
+        double z = start.getZ() + (end.getZ() - start.getZ()) * percent;
+        return new Location(start.getWorld(), x, y, z);
     }
 }
