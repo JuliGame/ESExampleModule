@@ -1,3 +1,5 @@
+package Randoms;
+
 import dev.esophose.playerparticles.particles.FixedParticleEffect;
 import juligame.epicswords2.API;
 import juligame.epicswords2.utils.colors;

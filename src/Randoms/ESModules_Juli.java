@@ -1,3 +1,5 @@
+package Randoms;
+
 import juligame.epicswords2.API;
 import org.bukkit.Location;
 import org.bukkit.Particle;

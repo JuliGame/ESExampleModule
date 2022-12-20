@@ -1,5 +1,8 @@
-import de.myzelyam.api.vanish.VanishAPI;
-import de.myzelyam.supervanish.SuperVanish;
+import Randoms.ESModule_Weapons;
+import dev.esophose.playerparticles.api.PlayerParticlesAPI;
+import dev.esophose.playerparticles.particles.ParticleEffect;
+import dev.esophose.playerparticles.particles.ParticlePair;
+import dev.esophose.playerparticles.styles.ParticleStyle;
 import juligame.epicswords2.API;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -84,6 +87,32 @@ public class ESModule_Armors {
                     -> portador.setHealth(Math.min(portador.getHealth() + actionLevel, portador.getMaxHealth()))
         );
 
+        API.addArmorAction(
+                "Heal Pasivo",
+                (portador, attacker, actionLevel, damage, finalDamage, entityDamageByEntityEvent, armorPieces)
+                -> {
+                    int delay = 15;
+                    int duration = delay * actionLevel;
+                    float healAmount = armorPieces / 4f;
+
+                    final ParticlePair pp = PlayerParticlesAPI.getInstance().addActivePlayerParticle(portador, ParticleEffect.HAPPY_VILLAGER, ParticleStyle.fromName("orbit"));
+                    new BukkitRunnable() {
+                        int timer = 0;
+                        @Override
+                        public void run() {
+                            if (timer == duration) {
+                                this.cancel();
+                                PlayerParticlesAPI.getInstance().removeActivePlayerParticle(portador, pp.getId());
+                            }
+                            if (portador.getHealth() < portador.getMaxHealth()) {
+                                portador.setHealth(Math.min(portador.getHealth() + healAmount, portador.getMaxHealth()));
+                            }
+                            timer += delay;
+                        }
+                    }.runTaskTimer(API.pluginInstance, 0, delay);
+
+                }
+        );
 
 
     }

@@ -1,14 +1,10 @@
 import de.myzelyam.api.vanish.VanishAPI;
-import io.github.hubertupe.ultimateparticleeffects.ParticleEffectCreator;
 import juligame.epicswords2.API;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
+import util.UPECompatibility;
 
 public class ESModule_Lunar {
     public static void main(){
@@ -44,8 +40,6 @@ public class ESModule_Lunar {
                 System.out.println(armorPieces);
                 double duracion = 20 * armorPieces;
                 double d = actionLevel;
-
-
                 new BukkitRunnable() {
                     int timer = 0;
                     @Override
@@ -68,13 +62,37 @@ public class ESModule_Lunar {
                                     continue;
                                 }
                             }
-                            le.damage(d, portador);
+                            le.damage(d);
                         }
+                        portador.getWorld().playSound(portador.getLocation(), "minecraft:block.redstone_torch.burnout", 0.2f, 2);
                         timer += 10;
                     }
                 }.runTaskTimer(API.pluginInstance, 0,10);
-            }
-        );
+            });
+
+        API.addComboAction(
+                "Rayo Lunar",
+                (portador, attacker, actionLevel, event) -> {
+                    int damage = actionLevel;
+
+                    int random = (int) (Math.random() * 4);
+                    UPECompatibility.createUPEParticle("RayosAzules_"+random, portador, false ,4, false, false, 1);
+
+                    for (Entity e : portador.getNearbyEntities(4, 4, 4)) {
+                        if (!(e instanceof LivingEntity)) continue;
+                        LivingEntity le = (LivingEntity) e;
+                        if (le.getType() == EntityType.PLAYER) {
+                            if (le == portador) {
+                                continue;
+                            }
+                            if (le.hasMetadata("NPC")) {
+                                continue;
+                            }
+                        }
+                        le.damage(damage);
+                    }
+                    portador.getWorld().playSound(portador.getLocation(), "minecraft:block.redstone_torch.burnout", .4f, 2);
+                });
 
     }
 

@@ -1,3 +1,5 @@
+package util;
+
 import io.github.hubertupe.ultimateparticleeffects.ParticleEffectCreator;
 import juligame.epicswords2.API;
 import org.bukkit.Bukkit;

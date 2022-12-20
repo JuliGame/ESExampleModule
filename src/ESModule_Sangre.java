@@ -1,9 +1,9 @@
 import juligame.epicswords2.API;
 import org.bukkit.Color;
-import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
+import util.lineaCurva;
 
 import java.util.ArrayList;
 
